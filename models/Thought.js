@@ -1,32 +1,28 @@
 const { Schema, model } = require('mongoose');
-const Response = require('./Response');
+const Reaction = require('./Reaction');
 
 // Schema to create Post model
-const thoughSchema = new Schema(
+const thoughtSchema = new Schema(
   {
     thoughtText: {
       type: String,
       required: true,
       minLength: 1,
       maxLength: 280,
-     
+
     },
     createdAt: {
       type: Date,
       default: Date.now,
-      get: date=>date.toLocaleDateString() 
-       },
-    advertiserFriendly: {
-      type: Boolean,
-      default: true,
-      
+      get: date => date.toLocaleDateString()
     },
-    description: {
+    username: {
       type: String,
-      minLength: 15,
-      maxLength: 500,
+      required: true,
+
     },
-    responses: [Response],
+   
+    reactions: [Reaction],
   },
   {
     toJSON: {
@@ -37,14 +33,14 @@ const thoughSchema = new Schema(
 );
 
 // Create a virtual property `responses` that gets the amount of response per though
-thoughSchema
-  .virtual('getResponses')
+thoughtSchema
+  .virtual('reactionCount')
   // Getter
   .get(function () {
-    return this.responses.length;
+    return this.reactions.length;
   });
 
 // Initialize our though model
-const though = model('though', thoughSchema);
+const thought = model('thought', thoughtSchema);
 
-module.exports = though;
+module.exports = thought;
