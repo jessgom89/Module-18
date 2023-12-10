@@ -23,6 +23,6 @@ router
 router.route('/:thoughtId/reactions').post(addReaction);
 
 // /api/videos/:videoId/responses/:responseId
-router.route('/:thoughtId/reactions/:reactionsId').delete(removeReaction);
+router.route('/:thoughtId/reactions/:reactionId').delete(removeReaction);
 
 module.exports = router;
